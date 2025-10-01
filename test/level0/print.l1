@@ -1,4 +1,4 @@
-/* print.l0: basic printing
+/* print.l1: basic printing
 [[BEGIN TEST CASES]]
 Output: <<
 Hello, compiler world!
@@ -11,6 +11,6 @@ print();
 
 print("Hello, compiler world!");
 
-print(42);
+print(42.0);
 
-print("There are ", 4, " lights.");
+print("There are ", 4.0, " lights.");

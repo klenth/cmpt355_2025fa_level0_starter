@@ -1,4 +1,4 @@
-/* input.l0: using input() to input numbers
+/* input.l1: using input() to input numbers
 [[BEGIN TEST CASES]]
 Interaction: <<Enter a number: {{19}}
 19.0>>
@@ -11,5 +11,5 @@ Interaction: <<Enter a number: {{1.2345}}
 [[END TEST CASES]]
 */
 
-x = input("Enter a number: ");
+double x = input("Enter a number: ");
 print(x);

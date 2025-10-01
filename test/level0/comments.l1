@@ -1,4 +1,4 @@
-/* comments.l0: test that all three kinds of comments work
+/* comments.l1: test that all three kinds of comments work
  * If they do, this program should print nothing :)
 [[BEGIN TEST CASES]]
 Interaction: <<{{}}>>

@@ -1,4 +1,4 @@
-/* variables.l0: Test that variables work
+/* variables.l1: Test that variables work
 [[BEGIN TEST CASES]]
 Interaction: <<x: {{1}}
 y: {{2}}
@@ -17,8 +17,8 @@ z = 2.3456, y = 1.2345, x = 0.1234>>
 [[END TEST CASES]]
 */
 
-x = input("x: ");
-why = input("y: ");
-_zee = input("z: ");
+double x = input("x: ");
+double why = input("y: ");
+double _zee = input("z: ");
 
 print("z = ", _zee, ", y = ", why, ", x = ", x);

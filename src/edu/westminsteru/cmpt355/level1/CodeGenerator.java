@@ -1,16 +1,16 @@
-package edu.westminsteru.cmpt355.level0;
+package edu.westminsteru.cmpt355.level1;
 
-import edu.westminsteru.cmpt355.level0.ast.*;
+import edu.westminsteru.cmpt355.level1.ir.*;
 
 import java.io.PrintWriter;
 
-/** Code generation stage of the compiler: given an AST, print jasm code */
+/** Code generation stage of the compiler: given an IR, print jasm code */
 public class CodeGenerator {
 
     /** The PrintWriter to print the output (jasm) code to */
     private final PrintWriter out;
-    /** The AST of the program */
-    private final AstProgram program;
+    /** The IR of the program */
+    private final IrProgram program;
     /** Name of the original source file */
     private final String sourceFilename;
     /** Name of the class being compiled */
@@ -18,14 +18,14 @@ public class CodeGenerator {
 
     /** Builder class for CodeGenerator instances */
     public static class Builder {
-        private AstProgram program;
+        private IrProgram program;
         private String sourceFilename;
         private String outClassName;
         private PrintWriter out = new PrintWriter(System.out);
 
         private Builder() {}
 
-        public Builder program(AstProgram program) {
+        public Builder program(IrProgram program) {
             this.program = program;
             return this;
         }
@@ -57,7 +57,7 @@ public class CodeGenerator {
     }
 
     private CodeGenerator(
-        AstProgram program,
+        IrProgram program,
         String sourceFilename,
         String outClassName,
         PrintWriter out

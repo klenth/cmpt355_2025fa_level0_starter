@@ -1,12 +1,11 @@
-package edu.westminsteru.cmpt355.level0;
+package edu.westminsteru.cmpt355.level1;
 
 import edu.westminsteru.jasm.Bytecode;
 import edu.westminsteru.jasm.JasmAssembler;
 import edu.westminsteru.jasm.Status;
-import edu.westminsteru.cmpt355.level0.ast.AstProgram;
-import edu.westminsteru.cmpt355.level0.util.Tree;
+import edu.westminsteru.cmpt355.level1.ast.AstProgram;
+import edu.westminsteru.cmpt355.level1.util.Tree;
 import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -20,7 +19,7 @@ import java.nio.file.Path;
 public class Main {
 
     public static void main(String... args) throws Exception {
-        boolean saveAst = false;
+        boolean saveAst = false, saveIr = false;
         boolean runAtOnce = false;
         Path inFile = null;
         Path outPath = Path.of("");
@@ -30,6 +29,8 @@ public class Main {
                 System.exit(0);
             } else if (args[i].equals("-ast"))
                 saveAst = true;
+            else if (args[i].equals("-ir"))
+                saveIr = true;
             else if (args[i].equals("-r"))
                 runAtOnce = true;
             else if (args[i].equals("-d") && i + 1 < args.length)
@@ -63,13 +64,25 @@ public class Main {
             }
         }
 
+        var analyzer = new SemanticAnalyzer();
+        var ir = analyzer.analyzeProgram(ast);
+
+        if (saveIr) {
+            Path irPath = outPath.resolve(inFilenameStem + ".ir.txt");
+            try (BufferedWriter bw = Files.newBufferedWriter(irPath);
+                 PrintWriter astOut = new PrintWriter(bw)) {
+                Tree.print(ast, astOut);
+                System.out.printf("IR saved to %s.\n", irPath);
+            }
+        }
+
         Path codePath = outPath.resolve(inFilenameStem + ".jasm");
         String outClassName = inFilenameStem.replaceAll("[^a-zA-Z0-9_$]", "_");
         try (BufferedWriter bw = Files.newBufferedWriter(codePath);
              PrintWriter codeOut = new PrintWriter(bw)) {
             var codeGenerator = CodeGenerator.builder()
-                .program(ast)
-                .sourceFilename(inFile)
+                .program(ir)
+                .sourceFilename(inFile.toString())
                 .outClassName(inFilenameStem)
                 .output(codeOut)
                 .build();
@@ -137,8 +150,8 @@ public class Main {
 
         // Fill in appropriately for your own lexer/parser, something like
         /*
-        var lexer = new Level0Lexer(stream);
-        var parser = new Level0Parser(new CommonTokenStream(lexer));
+        var lexer = new Level1Lexer(stream);
+        var parser = new Level1Parser(new CommonTokenStream(lexer));
         var program = parser.program().n;
 
         if (program == null)
