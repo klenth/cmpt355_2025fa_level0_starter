@@ -43,3 +43,13 @@
      - `Type` and `ReturnType` (in `edu.westminsteru.cmpt355.level1.lang`): the types available in the language at level 1 (`ReturnType` is intended for function return types, consisting of the regular `Type`s plus `void`).
    - `SymbolTable`, `GlobalSymbolTable`, and `LocalSymbolTable`: skeletons of symbol tables that will need to be filled in. Your `SemanticAnalyzer` can use `defineVariable()`/`defineFunction()` when a variable/function is declared/defined and `resolveVariable()`/`resolveFunction()` when one is accessed/called.
 - Searching the project for `Not implemented` will show you places that I've left stubs that need to be filled in.
+
+## Running the compiler tester
+You can use the provided compiler-tester .jar to automate the process of testing your compiler.
+1. Make sure that all the following are in your `CLASSPATH`:
+  - `lib/antlr-4.13.2-complete.jar`,
+  - `lib/jasm.jar`
+  - `lib/compiler-tester-0.2.jar`
+  - the compiled (.class) files of your compiler (in IntelliJ IDEA, by default these would be in `out/production/level1`)
+2. If necessary, modify the `test-config` file so that it has the correct name of your compiler's main class.
+3. Run the `edu.westminsteru.cmpt355.compiler_tester.Main` class, naming one or more test files or directories. To run all tests, you can just name the `test` directory.
